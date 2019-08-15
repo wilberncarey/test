@@ -2618,4 +2618,10 @@ body {
 	
 	
 }
-
+.headerButton, .share-it-wrapper {
+    display: inline;
+    margin-right: 5px!important;
+}
+.share-it-wrapper .ui-select{
+    display: inline;    
+}
