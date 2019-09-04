@@ -1,18 +1,8 @@
-<%@ page language="java" import="java.util.*,java.lang.Thread.*" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
+<%@ page pageEncoding="UTF-8"  language="java" contentType="text/html;charset=UTF-8"%>
+<%@ page import="org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Level,
+org.apache.logging.log4j.core.LoggerContext   , org.apache.logging.log4j.core.config.LoggerConfig,
+                 java.util.Map, java.util.*,java.net.*,java.text.*,java.util.zip.*,java.io.*"%>
 
-<%@page import="java.util.*,
-                java.net.*,
-                java.text.*,
-                java.util.zip.*,
-                java.io.*"
-%>
-<%@page import="java.lang.management.ClassLoadingMXBean"%>
-<%@page import="java.lang.management.RuntimeMXBean"%>
-<%@page import="java.io.PrintWriter"%>
-<%@page import="java.lang.management.ThreadInfo"%>
-<%@page import="java.lang.management.ManagementFactory"%>
-<%@page import="java.lang.management.ThreadMXBean"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -203,134 +193,13 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 
   <br/>
   <br/>
-  <h3 style="text-align: center">Thread Dump</h3>
-      
+  <h3 style="text-align: center">Dump Generator</h3>
       
 <br><br>
-<table>
-<tr>
-<td bgcolor="#E7E7EF" bordercolor="#000000" align="center" nowrap>
-<font face="Verdana" size="+1">Thread Dumps&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font>
-</td>
-</tr>
 
-<tr>
-<td bgcolor="#E7E7EF" bordercolor="#000000">
-<%
+	
+</div>
 
-
-final String VERSION = "2.0";
-
-ThreadMXBean txBean = ManagementFactory.getThreadMXBean();
-RuntimeMXBean runBean = ManagementFactory.getRuntimeMXBean();
-ClassLoadingMXBean classBean = ManagementFactory.getClassLoadingMXBean();
-txBean.setThreadContentionMonitoringEnabled(true);
-//out.print("<h1>JMX Thread Dump (v"+ VERSION + ")</h1><hr>");
-out.print("<h2>JVM Summary</h2>");
-out.print("&nbsp;&nbsp;&nbsp;<b>JVM bootclasspath: </b>" + runBean.getBootClassPath() + "<br>");
-out.print("<br>&nbsp;&nbsp;&nbsp;<b>JVM classpath: </b>" + runBean.getClassPath() + "<br>");
-out.print("<br>&nbsp;&nbsp;&nbsp;<b>JVM lib path: </b>" + runBean.getLibraryPath() + "<br>");
-out.print("<br>&nbsp;&nbsp;&nbsp;<b>JVM start time: </b>" + new java.util.Date(runBean.getStartTime()) + "<br>");
-out.print("<br>&nbsp;&nbsp;&nbsp;<b>JVM uptime: </b>" + (runBean.getUptime()/1000)/60 + " min<br>");
-List<String> args = runBean.getInputArguments();
-out.print("<br>&nbsp;&nbsp;&nbsp;<b>JVM arguments: </b><br>");
-for (int i=0; i< args.size(); i++){
-	out.print("<pre>      " + args.get(i) + "</pre>");
-}
-
-
-
-out.print("<hr><h2>Thread Summary</h2>&nbsp;&nbsp;&nbsp;<b>Peak Thread Count:</b>" + txBean.getPeakThreadCount());
-out.print("&nbsp;&nbsp;&nbsp;<b>Current Thread Count:</b>" + txBean.getThreadCount());
-out.print("&nbsp;&nbsp;&nbsp;<b>Deadlocked threads:</b> " + txBean.findDeadlockedThreads());
-out.print("&nbsp;&nbsp;&nbsp;<b>Monitor deadlocked threads:</b> " + txBean.findMonitorDeadlockedThreads() + "<br>");
-
-out.print("<hr><h2>Classloading Summary</h2>&nbsp;&nbsp;&nbsp;<b># of classes loaded now:</b>" + classBean.getLoadedClassCount());
-out.print("&nbsp;&nbsp;&nbsp;<b>Total # of class loaded since start:</b>" + classBean.getTotalLoadedClassCount());
-out.print("&nbsp;&nbsp;&nbsp;<b># of unloaded classes:</b> " + classBean.getUnloadedClassCount() + "<br><hr>");
-
-
-
-
-out.print("<h2>Thread details</h2>");
-
-
-%>
-<%!
-//private static ThreadMXBean thMxBean =
-//ManagementFactory.getThreadMXBean();
-//private static String getTaskName(long id, String name)
-//{
-  //  if (name == null) {
-    //    return Long.toString(id);
-   // }
-   // return id + " (" + name + ")<br>";
-//}
-%>
-<%
-out.print("---------------------------START-----------------------------------------<br>");
-out.print("Generating Thread-Dump At:" + (new java.util.Date()).toString() + "<BR>");
-out.println("---------------------------------------------------------------------<br>");
-
-//Map map = Thread.getAllStackTraces();
-
-//Iterator itr = map.keySet().iterator();
-//while (itr.hasNext()) {
-//Thread t = (Thread)itr.next();
-//StackTraceElement[] elem = (StackTraceElement[])map.get(t);
-/////////////////////
-Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
-
-Iterator<Thread> itr = map.keySet().iterator();
-
-while (itr.hasNext()) {
-   Thread t = itr.next();
-StackTraceElement[] elem = map.get(t);
-out.print("\"" + t.getName() + "\"");
-out.print(" Priority=" + t.getPriority());
-out.print(" Thread Id=" + t.getId());
-State s = t.getState();
-String state = null;
-String color = "000000";
-String GREEN = "00FF00";
-String RED = "FF0000";
-String ORANGE = "FCA742";
-switch(s) {
-case NEW: state ="NEW"; color = GREEN; break;
-case BLOCKED: state = "BLOCKED"; color = RED; break;
-case RUNNABLE: state = "RUNNABLE"; color = GREEN; break;
-case TERMINATED: state = "TERMINATED"; break;
-case TIMED_WAITING: state = "TIME WAITING"; color = ORANGE; break;
-case WAITING: state = "WAITING"; color = RED; break;
-}
-out.print("<font color=\"" + color + "\"> In State :</font>");
-out.println(" " + state + "<BR>");
-for (int i=0; i < elem.length; i++) {
-out.println("  at ");
-out.print(elem[i].toString());
-out.println("<BR>");
-}
-out.println("--------------------------------------------------------------------------<br>");
-}
-out.print("----------------------------FINISH--------------------------------------<br>");
-out.print("Generated Thread-Dump At:" + (new java.util.Date()).toString() + "<BR>");
-out.println("---------------------------------------------------------------------<br>");
-%>
-</td>
-</tr>
-</table>
-<br><br>
-
-    <script type="text/javascript">
-        $(document).on('pageinit', function () {
-            $('#pop1').on('click', function () {
-                $('#popupOffline').popup({ tolerance: 70, transition: 'pop' }).popup('open');
-                return false;
-            });
-        });
-    </script>
-
-	</div>
 
 	</body>
 </html>

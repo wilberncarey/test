@@ -1310,7 +1310,7 @@ body {
   -webkit-justify-content: center;
   -ms-justify-content: center;
   justify-content: center;
-  background-image: url("../img/bg2.jpg");
+  
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -1891,7 +1891,7 @@ body {
   padding-top: 3.25rem; }
   body:before {
     content: ' ';
-    background-image: url(../img/bg.jpg);
+   
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -2430,6 +2430,7 @@ td, th {
   border: 1px solid #afa5a5; 
   text-align: left; 
   min-width: 60px;
+  color: #373837;
 }
 
 

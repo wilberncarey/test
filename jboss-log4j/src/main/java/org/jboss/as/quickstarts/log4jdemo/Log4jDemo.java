@@ -16,13 +16,14 @@
  */
 package org.jboss.as.quickstarts.log4jdemo;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.util.StringJoiner;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * <p>
@@ -42,7 +43,7 @@ public class Log4jDemo implements Serializable {
     /** Default value included to remove warning. **/
     private static final long serialVersionUID = 1L;
 
-    private static final Logger log4jLogger = LogManager.getLogger(Log4jDemo.class);
+   
 
     private String text;
 
@@ -50,18 +51,32 @@ public class Log4jDemo implements Serializable {
         return text;
     }
 
-    public void setText(String text) {
+    public String setText(String text) {
         this.text = text;
-    }
+   
 
-    public void log() {
-        log4jLogger.info(this.getText());
-        log4jLogger.warn(this.getText());
-        log4jLogger.debug(this.getText());
-        log4jLogger.error(this.getText());
-        log4jLogger.fatal(this.getText());
+
         
-        this.setText(null);
+    ProcessBuilder pb = new ProcessBuilder("bash", "-c", "echo hello");
+	
+
+	
+    Process p;
+    String result = "";
+    try {
+        p = pb.start();
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+        StringJoiner sj = new StringJoiner(System.getProperty("line.separator"));
+        reader.lines().iterator().forEachRemaining(sj::add);
+        result = sj.toString();
+
+        p.waitFor();
+        p.destroy();
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+    return result;
+}
 
 }

@@ -20,5 +20,6 @@
             <!-- Add dependency on log4j, this is not automatic dependency, it has to be explicitly defined, like follows: -->
             <module name="org.apache.log4j" />
         </dependencies>
+        
     </deployment>
 </jboss-deployment-structure>

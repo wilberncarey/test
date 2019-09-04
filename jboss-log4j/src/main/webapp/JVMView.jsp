@@ -1,13 +1,7 @@
 <%@ page pageEncoding="UTF-8"  language="java" contentType="text/html;charset=UTF-8"%>
-<%@page import="java.lang.management.ManagementFactory"%>
-<%@page import="java.util.List"%>
-<%@page import="java.lang.management.MemoryPoolMXBean"%>
-<%@page import="java.lang.management.MemoryUsage"%>
-<%@page import="java.lang.management.MemoryMXBean"%>
-<%@page import="java.io.*"%>
-<%@ page import="java.util.*,java.io.*"%>
-
-
+<%@ page import="org.apache.logging.log4j.LogManager, org.apache.logging.log4j.Level,
+org.apache.logging.log4j.core.LoggerContext   , org.apache.logging.log4j.core.config.LoggerConfig,
+                 java.util.Map, java.util.*,java.net.*,java.text.*,java.util.zip.*,java.io.*"%>
 
 <!DOCTYPE html>
 <html>
@@ -369,11 +363,11 @@ chart.draw(data, options);
 				out.println("<li><a href=\"PropsView.jsp\">Properties Viewer</a></li>");
 				out.println("<li><a href=\"BatchAdmin.jsp\">Batch Administration</a></li>");
 				out.println("<li><a href=\"CommTest.jsp\">Communication Tester</a></li>");
-				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
-				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
+				out.println("<li><a href=\"ThreadView.jsp\">View Thread Dump</a></li>");
+				out.println("<li><a href=\"MemView.jsp\">View Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
-				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
-				
+				out.println("<li><a href=\"SysView.jsp\">System Overview</a></li>");
+				out.println("<li><a href=\"JVMView.jsp\">JVM Overview</a></li>");
 				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			
 		
@@ -389,11 +383,11 @@ chart.draw(data, options);
 				out.println("<li><a href=\"LogAdmin.jsp\">Log level Configurator</a></li>");
 				out.println("<li><a href=\"PropsView.jsp\">Properties Viewer</a></li>");
 				out.println("<li><a href=\"CommTest.jsp\">Communication Tester</a></li>");
-				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
-				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
+				out.println("<li><a href=\"ThreadView.jsp\">View Thread Dump</a></li>");
+				out.println("<li><a href=\"MemView.jsp\">View Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
-				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
-				
+				out.println("<li><a href=\"SysView.jsp\">System Overview</a></li>");
+				out.println("<li><a href=\"JVMView.jsp\">JVM Overview</a></li>");
 				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			}
 	
@@ -413,22 +407,18 @@ chart.draw(data, options);
 
   <br/>
   <br/>
-  <h3 style="text-align: center">JVM Memory Usage</h3>
-
-  <div style="padding-left: 20px;" class="content">     
-      
-
-
+ <h3 style="text-align: center">JVM Overview</h3>
+<hr>
+<div  class="content">     
 
 <fieldset id="toptab" style="width: 100%;border: none;" class="ui-grid-a">
 <table>
 <tr>
-<td style="width: 70%;">
-<div  id="piechart_3d" ></div>
+<td>
+<div  id="piechart_3d"></div>
 </td>
 <td>
 <div class="ui-block-d">
-
 <%
 
    
@@ -475,56 +465,11 @@ out.println("</table>");
 </div>
 </td>
 </tr>
-</table>
-</fieldset>
-
-<fieldset style="width: 100%;" class="ui-grid-b">
-<%!
-int dataSize = 1024 * 1024;
-
-
-    public String dumpUsage (MemoryUsage usage) {
-        StringBuffer buf = new StringBuffer();
-        buf.append ("<table style=\"font-size: 12px;\">");
-        buf.append ("<tr>");
-        buf.append ("<td>Committed</td>");
-        buf.append ("<td>" + usage.getCommitted()/dataSize + " MB</td>");
-        buf.append ("</tr>");
-        buf.append ("<tr>");
-        buf.append ("<td>Init</td>");
-        buf.append ("<td>" + usage.getInit()/dataSize + " MB</td>");
-        buf.append ("</tr>");
-        buf.append ("<tr>");
-        buf.append ("<td>Max</td>");
-        buf.append ("<td>" + usage.getMax()/dataSize + " MB</td>");
-        buf.append ("</tr>");
-        buf.append ("<tr>");
-        buf.append ("<td>Used</td>");
-        buf.append ("<td>" + usage.getUsed()/dataSize + " MB</td>");
-        buf.append ("</tr>");
-        buf.append ("</table>");
-        return buf.toString();
-    }
-%>
-<%
-    MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
-    //out.println ("<center><b><u>JVM MEMORY DETAILS</u></b></center><hr>");
-    out.println ("<br/><center>[<b>Heap usage</b>]</center><br>");
-    out.println (dumpUsage (memBean.getHeapMemoryUsage()));
-    out.println ("<center>[<b>Non Heap usage</b>]</center><br>");
-    out.println (dumpUsage (memBean.getNonHeapMemoryUsage()));
-    out.println ("Objects pending finalization:" + memBean.getObjectPendingFinalizationCount());
-   
-    
-    List<MemoryPoolMXBean> beans = ManagementFactory.getMemoryPoolMXBeans();
-%>
-<hr>
-<fieldset id="toptab" style="width: 100%;border: none;" class="ui-grid-b">
-<table>
-<tr style="background: rgba(255, 255, 255, 0.075)">
+<tr>
 <td>
 <br/>
-<h3 ><b>JVM Histogram All</b></h3>
+
+<h3 >JVM Histogram All</h3>
 </td>
 </tr>
 <tr>
@@ -585,20 +530,11 @@ out.println("</table>");
 
 </td>
 </tr>
-</table>
-</fieldset>
-
-<hr style="padding-left: -10px!important;">
-
-<fieldset id="toptab" style="width: 100%;border: none;" class="ui-grid-c">
-<table>
-<tr style="background: rgba(255, 255, 255, 0.075)">
-
-<td >
-
+<tr>
+<td>
 <br/>
 <br/>
-<h3 ><b>JVM Histogram Live</b></h3>
+<h3 >JVM Histogram Live</h3>
 </td>
 </tr>
 <tr>
@@ -608,7 +544,6 @@ out.println("</table>");
 </td>
 <td>
 <div  class="ui-block-c">
-
 
 
 <%
@@ -664,32 +599,13 @@ out.println("</table>");
 
 
 
-<hr>
-<% 
-out.println ("<br><br>[<b>POOLS</b>]<br/><br/>");
-    for (MemoryPoolMXBean memPoolBean:beans) {
-        out.println ("<br><center>[<b>" + memPoolBean.getName() + "</b>]</center><br>");
-        out.println (memPoolBean.getType() + "<br>");
-        //out.println ("CollectionUsageThreshold:" + memPoolBean.getCollectionUsageThreshold() + "<br>");
-        //out.println ("CollectionUsageThresholdCount:" + memPoolBean.getCollectionUsageThresholdCount() + "<br>");
-        //out.println ("UsageThreshold:" + memPoolBean.getUsageThreshold() + "<br>");
-        //out.println ("UsageThresholdCount:" + memPoolBean.getUsageThresholdCount() + "<br>");
-        MemoryUsage usage = memPoolBean.getPeakUsage();
-        out.println ("Peak Usage<br>");
-        out.println (dumpUsage (usage));
-        usage = memPoolBean.getUsage();
-        out.println ("Current Usage<br>");
-        out.println (dumpUsage (usage));
-    }
-%>
-<br><br>
 
-  </fieldset>
-  
-  </div>
 
 </div>
-	
+
+</div>
+
+
 
 	</body>
 </html>

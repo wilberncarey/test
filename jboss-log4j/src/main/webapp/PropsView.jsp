@@ -12,11 +12,27 @@
 <html>
 <head>
     
+   
+      <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
+  <meta http-equiv="cache-control" content="max-age=0" />
+  <meta http-equiv="expires" content="0" />
+  <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+  <meta http-equiv="pragma" content="no-cache" />
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<link rel="stylesheet" href="css/main1.css" />
 	<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<%
+int dataSize = 1024 * 1024;
+
+String jvmName = java.lang.management.ManagementFactory.getRuntimeMXBean().getName();
+long pid = Long.valueOf(jvmName.split("@")[0]);
+
+%>
+
+ 
 
 <meta charset="UTF-8">
 <title>Java Tools</title>
@@ -25,9 +41,50 @@
   .panel-content {
     padding: 1em;
   }
+ iframe {
+
+    margin: 0px;
+    padding: 0px;
+    background: black;
+    border: 0px;
+    display: block;
+
+}
+ 
+
+#toptab {
+ padding-left: 12px;
+  border-collapse: collapse;
+  border: none!important;
+  width: 90%;
+   background-color: transparent;
+  color: lightgrey;
+}
+#toptab td, #toptab th {
+  border: none;
+  padding: 2px;
+   background-color: transparent;
+  color: black;
+  font-size: 12px;
+}
+
   </style>
-</head>
-<body>
+<script>
+// Preventing whiteflash in loading iframes.     
+(function () {
+    var div = document.createElement('div'),
+        ref = document.getElementsByTagName('base')[0] || 
+              document.getElementsByTagName('script')[0];
+    div.innerHTML = '&shy;<style> iframe { visibility: hidden; } </style>';
+    ref.parentNode.insertBefore(div, ref);
+    window.onload = function() {
+        div.parentNode.removeChild(div);
+    }
+})();
+</script>
+
+
+<body >
 
 
  
@@ -36,75 +93,9 @@
 <div data-role="header">
  <h1 style="font-size: 48px">Java Tools</h1>
  
-<%
-int dataSize = 1024 * 1024;
-
-%>
 
 
 <div id="show" class="ui-btn-left" style="z-index: 9999;position:fixed" data-role="controlgroup" id="buttons-sys" data-type="horizontal">
-<a href="#" data-role="button"  data-position="right" data-position-fixed="true" >
-<%
-
-Process p = null;
-String[] array = {"/bin/bash", "-c", "top -b -n1 -w | grep 'KiB Mem'"};
-
-ProcessBuilder pb= new ProcessBuilder(array);
-
-p = pb.start();
-
-OutputStream os = p.getOutputStream();
-InputStream in = p.getInputStream();
-BufferedReader dis = new BufferedReader(new InputStreamReader(in));
-String disr = dis.readLine();
-
-
-
-while ( disr != null ) {
-	
-        out.println("SYSTEM " + disr); 
-        disr = dis.readLine(); 
-}
-
-%>
-        
-</a>
-
-<br>
-<a href="#" data-role="button"  data-position="right" data-position-fixed="true" >
-<%
-
-Process p1 = null;
-String[] array1 = {"/bin/bash", "-c", "top -b -n1 -w | grep 'Cpu'"};
-
-ProcessBuilder pb1= new ProcessBuilder(array1);
-
-p1 = pb1.start();
-
-OutputStream os1 = p1.getOutputStream();
-InputStream in1 = p1.getInputStream();
-BufferedReader dis1 = new BufferedReader(new InputStreamReader(in1));
-String disr1 = dis1.readLine();
-
-
-
-while ( disr1 != null ) {
-	
-        out.println("SYSTEM " +disr1); 
-        disr1 = dis1.readLine(); 
-}
-
-%>
-        
-</a>
-
-<br/>
-
-<a href="#" data-role="button"  data-position="right" data-position-fixed="true" >FREE JVM MEM: <%=Runtime.getRuntime().freeMemory()/dataSize %>  MB </a>
-<a href="#" data-role="button"   data-position="right" data-position-fixed="true" >MAX JVM MEM: <%=Runtime.getRuntime().maxMemory()/dataSize %>  MB </a>
-<a href="#" data-role="button"   data-position="right" data-position-fixed="true" >USED JVM MEM: <%=(Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory())/dataSize%>  MB </a>
-
-<br/>
 
 </div>
 
@@ -112,8 +103,28 @@ while ( disr1 != null ) {
 
     <a href="#defaultpanel" data-role="button" data-position="right" data-position-fixed="true" data-icon="bars">Menu</a>
     <a href="Logout.jsp"  data-role="button" data-position="right" data-position-fixed="true" data-icon="delete">Log Out</a>
-    <a href="#popup-1" data-transition="fade" data-position-to="window" data-rel="popup" data-role="button" data-position="right" data-position-fixed="true" data-icon="info">Help</a> 
-<a href="#" data-role="button"   data-position="right" data-position-fixed="true"><%=request.getServerName()%> - (<%=request.getLocalName()%>) </a>
+    <a href="#popupLogA" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">System Health</a>
+    <a href="#popupLogB" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">JVM Health</a>
+    <a href="#" data-role="button"   data-position="right" data-position-fixed="true"><%=request.getServerName()%> - (<%=request.getLocalName()%>) </a>
+</div>
+
+
+<div data-history="false" data-role="popup" id="popupLogA" data-arrow="true" data-theme="b"  data-overlay-theme="b">
+<a href="#"  data-rel="back" data-role="button" data-theme="a" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+<iframe id="sysframe" src="sysinf.jsp"  width="800" height="450"></iframe></div>
+
+<div data-history="false" data-role="popup" id="popupLogB" data-arrow="true" data-theme="b"  data-overlay-theme="b">
+<a href="#"  data-rel="back" data-role="button" data-theme="a" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+<iframe id="JVMframe" src="JVMinf.jsp"  width="600" height="450"></iframe>
+</div>
+
+
+
+
+<div  role="main" class="ui-content">
+
+  
+
 </div>
 
 
@@ -121,17 +132,6 @@ while ( disr1 != null ) {
 
 
 
-
-<div role="main" class="ui-content">
-
-  
-<div data-role="popup" id="popup-1" data-arrow="true" data-theme="b" class="ui-content" data-overlay-theme="b">
-	<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-left">Close</a>
-	<p>This is a popup</p>
-</div>
-
-</div>
-
 </div>
 
 
@@ -139,7 +139,7 @@ while ( disr1 != null ) {
   
   
   
-<div style="z-index: 9999;" data-role="panel" id="defaultpanel" data-theme="b" data-position="right" data-position-fixed="true" data-display="overlay">
+<div style="font-size: 18px!important;z-index: 9999;" data-role="panel" id="defaultpanel" data-theme="b" data-position="right" data-position-fixed="true" data-display="overlay">
 <div class="panel-content">
  	  <ul data-role="listview" id="listview-1">
  	  
@@ -154,9 +154,12 @@ while ( disr1 != null ) {
 				out.println("<li><a href=\"PropsView.jsp\">Properties Viewer</a></li>");
 				out.println("<li><a href=\"BatchAdmin.jsp\">Batch Administration</a></li>");
 				out.println("<li><a href=\"CommTest.jsp\">Communication Tester</a></li>");
-				out.println("<li><a href=\"ThreadView.jsp\">View Thread Dump</a></li>");
-				out.println("<li><a href=\"MemView.jsp\">View Memory Usage</a></li>");
+				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
+				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
+				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
+				
+				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			
 		
 				
@@ -171,9 +174,12 @@ while ( disr1 != null ) {
 				out.println("<li><a href=\"LogAdmin.jsp\">Log level Configurator</a></li>");
 				out.println("<li><a href=\"PropsView.jsp\">Properties Viewer</a></li>");
 				out.println("<li><a href=\"CommTest.jsp\">Communication Tester</a></li>");
-				out.println("<li><a href=\"ThreadView.jsp\">View Thread Dump</a></li>");
-				out.println("<li><a href=\"MemView.jsp\">View Memory Usage</a></li>");
+				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
+				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
+				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
+				
+				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			}
 	
 %>
@@ -228,10 +234,18 @@ out.print("<script>function myFunction() {var input, filter, table, tr, td, i;in
 %>
 
 
+ <script type="text/javascript">
+        $(document).on('pageinit', function () {
+            $('#pop1').on('click', function () {
+                $('#popupOffline').popup({ tolerance: 70, transition: 'pop' }).popup('open');
+                return false;
+            });
+        });
+    </script>
 
-</div>
 
- 
+
+ </div>
  
 </body>
 </html>
