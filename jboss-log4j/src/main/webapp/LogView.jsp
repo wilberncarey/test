@@ -1054,20 +1054,11 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 
     <a href="#defaultpanel" data-role="button" data-position="right" data-position-fixed="true" data-icon="bars">Menu</a>
     <a href="Logout.jsp"  data-role="button" data-position="right" data-position-fixed="true" data-icon="delete">Log Out</a>
-    <a href="#popupLogA" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">System Health</a>
-    <a href="#popupLogB" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">JVM Health</a>
+    <a href="sysinf.jsp" target="_blank" data-role="button"  data-position-to="window"  data-icon="heart">System Health</a>
+    <a href="JVMinf.jsp" target="_blank" data-role="button"  data-position-to="window"  data-icon="heart">JVM Health</a>
     <a href="#" data-role="button"   data-position="right" data-position-fixed="true"><%=request.getServerName()%> - (<%=request.getLocalName()%>) </a>
 </div>
 
-
-<div data-history="false" data-role="popup" id="popupLogA" data-arrow="true" data-theme="b"  data-overlay-theme="b">
-<a href="#"  data-rel="back" data-role="button" data-theme="a" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-<iframe id="sysframe" src="sysinf.jsp"  width="800" height="450"></iframe></div>
-
-<div data-history="false" data-role="popup" id="popupLogB" data-arrow="true" data-theme="b"  data-overlay-theme="b">
-<a href="#"  data-rel="back" data-role="button" data-theme="a" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-<iframe id="JVMframe" src="JVMinf.jsp"  width="600" height="450"></iframe>
-</div>
 
 
 
@@ -1654,29 +1645,7 @@ Upload finished.
     <%}%>
 
 
- <script type="text/javascript">
-        $(document).on('pageinit', function () {
-            $('#pop3').on('click', function () {
-                $('#popupOffline3').popup({ tolerance: 70, transition: 'pop' }).popup('open');
-                return false;
-            });
-        });
-    </script>
-
-
- <script type="text/javascript">
- function updateDiv()
- { 
-     $( "#popupOffline3" ).load(window.location.href + " #popupOffline3" );
- }
- </script>
  
-  <script type="text/javascript">
- function updateDiv()
- { 
-     $( "#pop3" ).load(window.location.href + " #pop3" );
- }
- </script>
 
 </div>
 

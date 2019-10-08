@@ -98,19 +98,19 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 
     <a href="#defaultpanel" data-role="button" data-position="right" data-position-fixed="true" data-icon="bars">Menu</a>
     <a href="Logout.jsp"  data-role="button" data-position="right" data-position-fixed="true" data-icon="delete">Log Out</a>
-    <a href="#popupLogA" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">System Health</a>
-    <a href="#popupLogB" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">JVM Health</a>
+    <a href="#popupSysA" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">System Health</a>
+    <a href="#popupSysB" data-role="button" data-rel="popup" data-position-to="window"  data-icon="heart">JVM Health</a>
     <a href="#" data-role="button"   data-position="right" data-position-fixed="true"><%=request.getServerName()%> - (<%=request.getLocalName()%>) </a>
 </div>
 
 
-<div data-history="false" data-role="popup" id="popupLogA" data-arrow="true" data-theme="b"  data-overlay-theme="b">
+<div data-history="false" data-role="popup" id="popupSysA" data-arrow="true" data-theme="b"  data-overlay-theme="b">
 <a href="#"  data-rel="back" data-role="button" data-theme="a" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-<iframe id="sysframe" src="sysinf.jsp"  width="800" height="450"></iframe></div>
+<iframe id="sysframe" src="sysinf.jsp"  width="600" height="550"></iframe></div>
 
-<div data-history="false" data-role="popup" id="popupLogB" data-arrow="true" data-theme="b"  data-overlay-theme="b">
+<div data-history="false" data-role="popup" id="popupSysB" data-arrow="true" data-theme="b"  data-overlay-theme="b">
 <a href="#"  data-rel="back" data-role="button" data-theme="a" class="ui-btn ui-btn-b ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
-<iframe id="JVMframe" src="JVMinf.jsp"  width="600" height="450"></iframe>
+<iframe id="JVMframe" src="JVMinf.jsp"  width="600" height="550"></iframe>
 </div>
 
 

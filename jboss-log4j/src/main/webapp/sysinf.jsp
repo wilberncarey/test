@@ -384,29 +384,27 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 <h2>SYSTEM RESOURCES</h2>
 
  
-<div id="chart_div"></div>
-</div>
-<br/>
+
  
-<div style="display: table-cell;width: 100%">
  
-<div id="piechart_sys_cpu" style="float: left;width: 400px;height: 250px;">
+<div  id="piechart_sys_cpu">
 </div>
 
-<div id="piechart_sys_mem" style="float: right;width: 400px;height: 250px;">
-</div>
-
-
-
-
-	
-
-
-
+<div id="piechart_sys_mem" >
 </div>
 
 
+
+
+
+	</div>
+
+
+
 </div>
+
+
+
 
   
 
