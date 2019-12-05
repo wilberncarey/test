@@ -170,7 +170,7 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 </script>
 	 
 
-<script >
+
 
 <script type="text/javascript">
 [c1,c2,c3,c4,c5,c6,c7,c8,c9,c10,c11,c12,c13,c14,c15,c16,c17,c18,c19,c20] = [<%Process pCHARc = null;
@@ -221,10 +221,11 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
          
         ]);
 
-    	  var options = {titleTextStyle: {fontSize: '20',}, 
+    	  var options = {titleTextStyle: {fontSize: '20', color: 'lightgrey'}, 
     			  title: 'Class Usage',
     	    	  backgroundColor: { fill:'transparent'},
     	    	  legend: 'none',
+    	    	  
     	    	  
     	  
                   chart: { 
@@ -313,7 +314,7 @@ chart.draw(data, options);
          
         ]);
 
-    	  var options = {titleTextStyle: {fontSize: '20',}, 
+    	  var options = {titleTextStyle: {fontSize: '20', color: 'lightgrey'}, 
     			  title: 'Class Usage Live',
     	    	  backgroundColor: { fill:'transparent'},
     	    	  legend: 'none',
@@ -367,18 +368,7 @@ chart.draw(data, options);
 <div data-role="page" id="page1" data-theme="b">
    
 
-<button type="button"> 
-        Button to Reload page 
-    </button> 
-  
-    <script type="text/javascript"> 
-        $(document).ready(function () { 
-            $("button").click(function () { 
-                location.reload(true); 
-                alert('Reloading Page'); 
-            }); 
-        }); 
-    </script>
+
 
 
 
@@ -450,7 +440,7 @@ out.println("</table>");
 <hr>
 <fieldset id="toptab" style="width: 100%;border: none;" class="ui-grid-b">
 <table>
-<tr style="background: rgba(255, 255, 255, 0.075)">
+<tr>
 <td>
 <br/>
 <h3 ><b>JVM Histogram All</b></h3>
@@ -521,7 +511,7 @@ out.println("</table>");
 
 <fieldset id="toptab" style="width: 100%;border: none;" class="ui-grid-c">
 <table>
-<tr style="background: rgba(255, 255, 255, 0.075)">
+<tr >
 
 <td >
 

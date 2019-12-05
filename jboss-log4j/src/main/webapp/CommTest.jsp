@@ -205,7 +205,7 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 <%
 
 String ENV = System.getProperty("ITSENV");
-String webInfPath = getServletConfig().getServletContext().getRealPath("WEB-INF/classes/JCOMM/");
+String webInfPath = getServletConfig().getServletContext().getRealPath("WEB-INF/classes/JTOOLS/JCOMM/");
 List<String> allLines = Files.readAllLines(Paths.get(webInfPath + "/" + System.getProperty("ITSENV")+"_CommTestData.txt"));
 for (String line1 : allLines) {
 	System.out.println(webInfPath);

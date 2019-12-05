@@ -355,7 +355,7 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
     <style>
         html {
             height: 100%;
-            overflow: hidden;
+           
         }
         body {
             margin: 0;
@@ -392,7 +392,52 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 
 <div id="piechart_sys_mem" >
 </div>
+<br/>
 
+
+<%
+
+   
+Process prun = null;
+String[] arrayrun = { "/bin/bash", "-c", "top -b -n1 |head -21|tail -15| awk -F \" \" '{print $1\" \"$2\" \"$3\" \"$4\" \"$5\" \"$6\" \"$7\" \"$8\" \"$9\" \"$10\" \"$11\" \"$12\" \"}'"};
+
+ProcessBuilder pbrun= new ProcessBuilder(arrayrun);
+pbrun.directory(new File(System.getProperty("BatchDir")));
+prun = pbrun.start();
+
+OutputStream osrun = prun.getOutputStream();
+InputStream inrun = prun.getInputStream();
+BufferedReader disrun = new BufferedReader(new InputStreamReader(inrun));
+String disrrun = disrun.readLine();
+
+out.println("<table style=\"width: 30%;word-wrap:break-word;\" id=\"toptab\" >");
+
+
+
+while ( disrrun != null ) {
+	out.println("<tr>");
+
+
+	 out.println("<td>");
+	
+	disrrun = disrrun.replaceAll("\\s+","</td><td>");
+	
+	
+
+        out.println(disrrun); 
+    	out.println("</td>");
+    	
+    	
+   	 out.println("</tr>");
+   	 
+   	disrrun = disrun.readLine();  
+   
+
+}
+out.println("</table>");
+
+
+%>
 
 
 

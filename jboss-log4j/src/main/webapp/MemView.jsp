@@ -49,7 +49,7 @@
   border: none!important;
   width: 90%;
    background-color: transparent;
-  color: lightgrey;
+  color: black;
 }
 #toptab td, #toptab th {
   border: none;

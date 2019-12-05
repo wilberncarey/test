@@ -971,25 +971,7 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
     display: block;
 
 }
- #loading {
-   width: 100%;
-   height: 100%;
-   top: 0;
-   left: 0;
-   position: fixed;
-   display: block;
-   opacity: 0.7;
-   background-color: #fff;
-   z-index: 99;
-   text-align: center;
-}
 
-#loading-image {
-  position: absolute;
-  top: 100px;
-  left: 240px;
-  z-index: 100;
-}
 
 #toptab {
  padding-left: 12px;
@@ -1693,19 +1675,6 @@ Upload finished.
 
 
 
-<div id="loading" style="display:block;margin:auto;" class="ui-loader ui-corner-all ui-body-a ui-loader-default"><br/><br/><span class="ui-icon-loading" style="position: fixed;top: 50%;left: 50%;transform: translate(-50%, -50%);"></span><h1>loading</h1></div>
-  
-
-
-
-
-</div>
-
-<script type="text/javascript">
-     $(window).load(function() {
-     $('#loading').hide();
-  });
-</script>
 
 
 
