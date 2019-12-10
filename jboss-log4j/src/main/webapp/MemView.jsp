@@ -154,7 +154,7 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
 				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
-				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
+				
 				
 				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			
@@ -174,7 +174,7 @@ long pid = Long.valueOf(jvmName.split("@")[0]);
 				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
 				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
-				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
+				
 				
 				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			}

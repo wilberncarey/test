@@ -1086,7 +1086,7 @@ a.disabled {
 				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
 				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
-				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
+				
 				
 				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			
@@ -1106,7 +1106,7 @@ a.disabled {
 				out.println("<li><a href=\"ThreadView.jsp\">JVM Thread Dump</a></li>");
 				out.println("<li><a href=\"MemView.jsp\">JVM Memory Usage</a></li>");
 				out.println("<li><a href=\"JDBCView.jsp\">JDBC Tester</a></li>");
-				out.println("<li><a href=\"SysView.jsp\">System Resources</a></li>");
+				
 				
 				out.println("<li><a href=\"DumpGen.jsp\">Dump Generator</a></li>");
 			}
@@ -1127,7 +1127,7 @@ a.disabled {
 
   <br/>
   <br/>
-  <h3 style="text-align: center">Batch Administrator</h3>
+  <h3 style="text-align: center">Dump Generator</h3>
 
   
 
